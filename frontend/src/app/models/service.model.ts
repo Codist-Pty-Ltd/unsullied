@@ -79,33 +79,39 @@ export const AVAILABLE_SERVICES: Service[] = [
   },
   // Pest Control Services
   {
-    name: 'Pest Fumigation',
-    quantity: 0,
-    unitPrice: 350.00,
-    category: 'pest-control'
-  },
-  {
-    name: 'Rodent Control',
-    quantity: 0,
-    unitPrice: 280.00,
-    category: 'pest-control'
-  },
-  {
-    name: 'Cockroach Treatment',
+    name: 'Cockroach Control',
     quantity: 0,
     unitPrice: 250.00,
     category: 'pest-control'
   },
   {
-    name: 'Ant Treatment',
+    name: 'Rodent Management',
+    quantity: 0,
+    unitPrice: 280.00,
+    category: 'pest-control'
+  },
+  {
+    name: 'Termite Treatment',
+    quantity: 0,
+    unitPrice: 400.00,
+    category: 'pest-control'
+  },
+  {
+    name: 'Ant Control',
     quantity: 0,
     unitPrice: 200.00,
     category: 'pest-control'
   },
   {
-    name: 'Termite Inspection',
+    name: 'Bed Bug Treatment',
     quantity: 0,
-    unitPrice: 400.00,
+    unitPrice: 350.00,
+    category: 'pest-control'
+  },
+  {
+    name: 'General Pest Control',
+    quantity: 0,
+    unitPrice: 350.00,
     category: 'pest-control'
   }
 ];

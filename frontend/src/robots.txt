@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /job-card
+Disallow: /payment-return
+
+Sitemap: https://unsullied.co.za/sitemap.xml

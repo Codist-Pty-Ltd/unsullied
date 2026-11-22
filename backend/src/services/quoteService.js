@@ -523,15 +523,18 @@ class QuoteService {
   }
 
   /**
-   * Get all booked quotes with preferred dates
-   * @returns {Promise<Array>} Array of booked quotes with services
+   * Get scheduled quotes, using the same preferred date shown on the dashboard.
+   * Pending and sent quotes stay on the calendar until they are completed or cancelled.
+   * @returns {Promise<Array>} Array of quotes with services
    */
   async getBookings() {
     const { Op } = require('sequelize');
     
     return await Quote.findAll({
       where: {
-        status: 'booked',
+        status: {
+          [Op.notIn]: ['cancelled', 'completed']
+        },
         preferredDate: {
           [Op.ne]: null
         }

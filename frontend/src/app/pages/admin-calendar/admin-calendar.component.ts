@@ -51,10 +51,11 @@ export class AdminCalendarComponent implements OnInit {
 
     this.bookings.forEach(quote => {
       if (quote.preferredDate) {
-        if (!grouped[quote.preferredDate]) {
-          grouped[quote.preferredDate] = [];
+        const day = quote.preferredDate.slice(0, 10);
+        if (!grouped[day]) {
+          grouped[day] = [];
         }
-        grouped[quote.preferredDate].push(quote);
+        grouped[day].push(quote);
       }
     });
 
@@ -86,6 +87,28 @@ export class AdminCalendarComponent implements OnInit {
         day: 'numeric'
       });
     }
+  }
+
+  getStatusBadgeClass(status: string | null | undefined): string {
+    const classes: { [key: string]: string } = {
+      'sent_to_whatsapp': 'badge bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20',
+      'pending': 'badge bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
+      'booked': 'badge bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20',
+      'completed': 'badge bg-purple-50 text-purple-700 ring-1 ring-inset ring-purple-600/20',
+      'cancelled': 'badge bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20'
+    };
+    return classes[status || ''] || 'badge bg-gray-50 text-gray-700 ring-1 ring-inset ring-gray-600/20';
+  }
+
+  getStatusLabel(status: string | null | undefined): string {
+    const labels: { [key: string]: string } = {
+      'sent_to_whatsapp': 'Sent to WhatsApp',
+      'pending': 'Pending',
+      'booked': 'Booked',
+      'completed': 'Completed',
+      'cancelled': 'Cancelled'
+    };
+    return labels[status || ''] || status || 'Pending';
   }
 
   getTimeBlockLabel(timeBlock: string | null | undefined): string {

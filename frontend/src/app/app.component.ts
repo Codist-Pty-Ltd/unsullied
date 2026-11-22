@@ -1,53 +1,52 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { SeoService } from './services/seo.service';
 
 @Component({
   selector: 'app-root',
   template: `
-    <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="min-h-screen flex flex-col" [class.bg-gray-50]="!isHome" [class.bg-white]="isHome">
       <header
-        class="sticky top-0 z-50 transition-all duration-300 border-b"
-        [class]="isScrolled ? 'bg-white/80 backdrop-blur-xl border-gray-200/60 shadow-sm' : 'bg-white border-transparent'"
+        *ngIf="!isHome"
+        class="sticky top-0 z-50 border-b border-[#dce6ee] bg-white/95 backdrop-blur-xl"
       >
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div class="flex items-center justify-between">
-            <a routerLink="/" class="flex items-center gap-2.5 group">
-              <div class="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                </svg>
-              </div>
-              <div>
-                <h1 class="text-lg font-bold text-gray-900 tracking-tight leading-tight">Unsullied</h1>
-                <p class="text-[11px] text-gray-500 leading-tight hidden sm:block">Cleaning & Pest Control</p>
-              </div>
-            </a>
-            <nav class="flex items-center gap-1">
-              <a
-                routerLink="/quote"
-                routerLinkActive="bg-primary-50 text-primary-700 font-semibold"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-150"
-              >Quote</a>
-              <a
-                routerLink="/admin/quotes"
-                routerLinkActive="bg-primary-50 text-primary-700 font-semibold"
-                class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-150"
-              >Admin</a>
-              <a
-                routerLink="/admin/calendar"
-                routerLinkActive="bg-primary-50 text-primary-700 font-semibold"
-                class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-150"
-              >Calendar</a>
-            </nav>
-          </div>
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <a routerLink="/" class="flex items-center">
+            <img src="assets/home/logo-header.svg" alt="Unsullied" class="h-12 w-auto" />
+          </a>
+          <nav class="flex items-center gap-1">
+            <a
+              routerLink="/quote"
+              routerLinkActive="bg-primary-100 text-primary-900 font-semibold"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-lg px-3 py-1.5 text-sm font-medium text-[#13294e] hover:bg-primary-50"
+            >Quote</a>
+            <a
+              routerLink="/admin/quotes"
+              routerLinkActive="bg-primary-100 text-primary-900 font-semibold"
+              class="rounded-lg px-3 py-1.5 text-sm font-medium text-[#13294e] hover:bg-primary-50"
+            >Admin</a>
+            <a
+              routerLink="/admin/calendar"
+              routerLinkActive="bg-primary-100 text-primary-900 font-semibold"
+              class="rounded-lg px-3 py-1.5 text-sm font-medium text-[#13294e] hover:bg-primary-50"
+            >Calendar</a>
+            <button
+              *ngIf="auth.loggedIn"
+              type="button"
+              (click)="logout()"
+              class="rounded-lg px-3 py-1.5 text-sm font-medium text-[#13294e] hover:bg-primary-50"
+            >Log out</button>
+          </nav>
         </div>
       </header>
-      <main class="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main class="flex-1" [class.mx-auto]="!isHome" [class.w-full]="!isHome" [class.max-w-6xl]="!isHome" [class.px-4]="!isHome" [class.py-8]="!isHome" [class.sm:px-6]="!isHome">
         <router-outlet></router-outlet>
       </main>
-      <footer class="bg-white border-t border-gray-100 mt-auto">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-gray-400 text-sm">
-          <p>&copy; 2026 Unsullied Cleaning Company. Designed by CODIST.</p>
+      <footer *ngIf="!isHome" class="mt-auto border-t border-[#dce6ee] bg-[#13294e] text-sm text-[#caedff]">
+        <div class="mx-auto max-w-6xl px-4 py-6 text-center sm:px-6">
+          <p>&copy; 2026 Unsullied. <a class="underline" routerLink="/privacy">Privacy</a> · <a class="underline" routerLink="/terms">Terms</a> · <a class="underline" href="mailto:sales@unsullied.co.za">sales@unsullied.co.za</a> · +27 79 914 6248</p>
         </div>
       </footer>
     </div>
@@ -56,10 +55,29 @@ import { Component, HostListener } from '@angular/core';
 })
 export class AppComponent {
   title = 'Unsullied';
-  isScrolled = false;
+  isHome = true;
 
-  @HostListener('window:scroll')
-  onWindowScroll(): void {
-    this.isScrolled = window.scrollY > 10;
+  constructor(private router: Router, public auth: AuthService, private seo: SeoService) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.applyRoute(event.urlAfterRedirects);
+      }
+    });
+    this.applyRoute(this.router.url);
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/admin/login']);
+  }
+
+  private applyRoute(url: string): void {
+    const path = url.split('?')[0].split('#')[0] || '/';
+    let route = this.router.routerState.snapshot.root;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    this.isHome = ['/', '/cleaning', '/pest-control', '/about', '/privacy', '/terms'].includes(path) || !!route.data['page'];
+    this.seo.apply(path, route.data);
   }
 }

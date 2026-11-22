@@ -68,7 +68,7 @@
             </button>
           </div>
           <div class="flex items-center justify-between">
-            <span class="text-xs text-gray-400">{{ formatDate(quote.createdAt) }}</span>
+            <span class="text-xs text-gray-400">{{ formatBookingDate(quote.preferredDate) }}</span>
             <span class="text-base font-bold text-gray-900 tabular-nums">R{{ quote.totalWithCallOut.toFixed(2) }}</span>
           </div>
           <div *ngIf="quote.jobCard" class="mt-2 pt-2 border-t border-gray-50">
@@ -118,7 +118,7 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-600">{{ formatDate(quote.createdAt) }}</div>
+                  <div class="text-sm text-gray-600">{{ formatBookingDate(quote.preferredDate) }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm font-semibold text-gray-900 tabular-nums">R{{ quote.totalWithCallOut.toFixed(2) }}</div>
@@ -126,8 +126,9 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex flex-col gap-1">
                     <select
-                      [value]="quote.status"
-                      (change)="updateStatus(quote, $any($event).target.value)"
+                      [ngModel]="quote.status"
+                      (ngModelChange)="updateStatus(quote, $event)"
+                      [ngModelOptions]="{standalone: true}"
                       [disabled]="isLoading"
                       [class]="getStatusSelectClass(quote.status)"
                     >
@@ -235,7 +236,7 @@
               </div>
               <div *ngIf="selectedQuote.preferredDate">
                 <span class="text-gray-500">Preferred Date</span>
-                <p class="font-medium text-gray-900 mt-0.5">{{ formatDate(selectedQuote.preferredDate) }}</p>
+                <p class="font-medium text-gray-900 mt-0.5">{{ formatBookingDate(selectedQuote.preferredDate) }}</p>
               </div>
               <div *ngIf="selectedQuote.timeBlock">
                 <span class="text-gray-500">Time</span>
@@ -303,8 +304,9 @@
           <div class="flex items-center justify-between pt-2">
             <span class="text-sm font-medium text-gray-500">Status</span>
             <select
-              [value]="selectedQuote.status"
-              (change)="updateStatus(selectedQuote, $any($event).target.value)"
+              [ngModel]="selectedQuote.status"
+              (ngModelChange)="updateStatus(selectedQuote, $event)"
+              [ngModelOptions]="{standalone: true}"
               [class]="getStatusSelectClass(selectedQuote.status)"
             >
               <option *ngFor="let status of statusOptions" [value]="status">

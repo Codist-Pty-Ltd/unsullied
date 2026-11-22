@@ -123,6 +123,17 @@ export class AdminQuotesComponent implements OnInit {
     });
   }
 
+  formatBookingDate(dateString?: string): string {
+    if (!dateString) return 'No date';
+    const day = dateString.slice(0, 10);
+    const date = new Date(`${day}T00:00:00`);
+    return date.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
   viewDetails(quote: Quote): void {
     this.selectedQuote = quote;
     this.showDetailsModal = true;

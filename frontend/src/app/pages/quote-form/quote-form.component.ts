@@ -30,6 +30,8 @@ export class QuoteFormComponent implements OnInit {
   showPreview: boolean = false;
   currentQuoteId: number | null = null;
   paymentStatus: 'unpaid' | 'paid' = 'unpaid';
+  fromHome = false;
+  serviceTab: 'cleaning' | 'pest' = 'cleaning';
 
   // Stepper
   currentStep: number = 1;
@@ -50,6 +52,43 @@ export class QuoteFormComponent implements OnInit {
     this.pestControlServices = AVAILABLE_SERVICES
       .filter(s => s.category === 'pest-control')
       .map(s => ({ ...s, quantity: 0 }));
+
+    this.applyHomeEnquiry();
+  }
+
+  private applyHomeEnquiry(): void {
+    const params = this.route.snapshot.queryParamMap;
+    const name = params.get('name');
+    const email = params.get('email');
+    const address = params.get('address');
+    const date = params.get('date');
+    const notes = params.get('notes');
+    const serviceName = params.get('service');
+    if (!name && !email && !address && !serviceName && !notes) {
+      return;
+    }
+
+    this.fromHome = true;
+    if (name) this.customerName = name;
+    if (email) this.customerEmail = email;
+    if (address) this.address = address;
+    if (date) this.preferredDate = date;
+    if (notes) this.specialInstructions = notes;
+
+    if (serviceName) {
+      const match = [...this.cleaningServices, ...this.pestControlServices]
+        .find(service => service.name === serviceName);
+      if (match) {
+        match.quantity = 1;
+        this.serviceTab = match.category === 'pest-control' ? 'pest' : 'cleaning';
+      }
+    }
+
+    if (this.isStep1Valid() && this.isStep2Valid()) {
+      this.currentStep = 4;
+    } else if (this.isStep1Valid()) {
+      this.currentStep = 2;
+    }
   }
 
   // Step validation

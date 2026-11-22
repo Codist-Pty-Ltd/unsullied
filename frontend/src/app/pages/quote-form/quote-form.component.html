@@ -3,6 +3,7 @@
   <div class="text-center mb-8">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Request a Quote</h2>
     <p class="text-gray-500 mt-2">Select your services and get an instant quote</p>
+    <p *ngIf="fromHome" class="mt-3 text-sm font-medium text-primary-800">Your homepage request is filled in. Add services, then send it on WhatsApp.</p>
   </div>
 
   <!-- Stepper Indicator -->
@@ -157,7 +158,11 @@
     <!-- Step 2: Select Services -->
     <div *ngIf="currentStep === 2" class="step-enter">
       <div class="space-y-6">
-        <div class="card">
+        <div class="flex gap-2">
+          <button type="button" (click)="serviceTab = 'cleaning'" class="rounded-full px-4 py-2 text-sm font-bold" [class.bg-primary-900]="serviceTab === 'cleaning'" [class.text-white]="serviceTab === 'cleaning'" [class.bg-white]="serviceTab !== 'cleaning'" [class.text-primary-900]="serviceTab !== 'cleaning'" [class.border]="serviceTab !== 'cleaning'">Cleaning</button>
+          <button type="button" (click)="serviceTab = 'pest'" class="rounded-full px-4 py-2 text-sm font-bold" [class.bg-primary-900]="serviceTab === 'pest'" [class.text-white]="serviceTab === 'pest'" [class.bg-white]="serviceTab !== 'pest'" [class.text-primary-900]="serviceTab !== 'pest'" [class.border]="serviceTab !== 'pest'">Pest Control</button>
+        </div>
+        <div class="card" *ngIf="serviceTab === 'cleaning'">
           <app-service-selector
             [services]="cleaningServices"
             [title]="'Cleaning Services'"
@@ -165,7 +170,7 @@
           ></app-service-selector>
         </div>
 
-        <div class="card">
+        <div class="card" *ngIf="serviceTab === 'pest'">
           <app-service-selector
             [services]="pestControlServices"
             [title]="'Pest Control Services'"

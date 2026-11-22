@@ -1,0 +1,48 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap bar">
+    <a routerLink="/" aria-label="Unsullied home"><img src="assets/home/logo-header.svg" alt="Unsullied" /></a>
+    <nav aria-label="Primary">
+      <a routerLink="/cleaning">Cleaning</a>
+      <a routerLink="/pest-control">Pest control</a>
+      <a routerLink="/quote">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <p class="eyebrow">{{ page.eyebrow }}</p>
+  <h1>{{ page.headline }}</h1>
+  <p class="lead">{{ page.lead }}</p>
+  <div class="actions">
+    <a class="btn btn-cyan" routerLink="/quote">Get a quote</a>
+    <a class="btn btn-whatsapp" [href]="whatsappHref" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="btn btn-outline" [href]="phoneHref">Call +27 79 914 6248</a>
+  </div>
+
+  <section *ngIf="page.offers" class="offers" aria-label="Services">
+    <article *ngFor="let offer of page.offers">
+      <h2>{{ offer.title }}</h2>
+      <p>{{ offer.copy }}</p>
+      <p class="price">{{ offer.price }}</p>
+      <a [routerLink]="quoteLink(offer.service)" [queryParams]="quoteQuery(offer.service)">Request this service</a>
+    </article>
+  </section>
+
+  <section *ngFor="let block of page.blocks" class="block">
+    <h2>{{ block.heading }}</h2>
+    <p *ngFor="let paragraph of block.paragraphs">{{ paragraph }}</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p>© {{ year }} Unsullied. Gauteng. <a href="mailto:sales@unsullied.co.za">sales@unsullied.co.za</a></p>
+    <nav aria-label="Company">
+      <a routerLink="/about">About</a>
+      <a routerLink="/privacy">Privacy</a>
+      <a routerLink="/terms">Terms</a>
+      <a routerLink="/">Home</a>
+    </nav>
+  </div>
+</footer>

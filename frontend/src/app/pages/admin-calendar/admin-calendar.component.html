@@ -4,7 +4,7 @@
     <div class="mb-8 flex items-center justify-between">
       <div>
         <h1 class="section-heading">Booking Calendar</h1>
-        <p class="mt-1 text-sm text-gray-500">View all upcoming booked jobs</p>
+        <p class="mt-1 text-sm text-gray-500">Jobs on the date requested in the quote</p>
       </div>
       <button
         (click)="loadBookings()"
@@ -66,6 +66,9 @@
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 flex-wrap mb-2">
                   <h3 class="text-base font-semibold text-gray-900">{{ quote.customerName }}</h3>
+                  <span [class]="getStatusBadgeClass(quote.status)">
+                    {{ getStatusLabel(quote.status) }}
+                  </span>
                   <span [class]="getTimeBlockBadgeClass(quote.timeBlock)">
                     {{ getTimeBlockLabel(quote.timeBlock) }}
                   </span>

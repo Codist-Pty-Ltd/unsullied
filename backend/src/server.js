@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { sequelize, testConnection } = require('./config/database');
 const quoteRoutes = require('./routes/quoteRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Import models to register them with Sequelize
 const Quote = require('./models/Quote');
@@ -107,6 +108,7 @@ const initializeDatabase = async () => {
 initializeDatabase();
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/quotes', quoteRoutes);
 
 // Debug: Log all registered routes
