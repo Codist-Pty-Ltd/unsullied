@@ -8,7 +8,6 @@
     <nav class="nav-links" id="site-nav" [class.open]="menuOpen" aria-label="Primary navigation">
       <a href="#cleaning" (click)="openServiceTab('cleaning', $event)">Cleaning Services</a>
       <a href="#pest-control" (click)="openServiceTab('pest', $event)">Pest Control</a>
-      <a href="#areas" (click)="scrollTo('areas', $event)">Gauteng</a>
       <a href="#quote" (click)="scrollTo('quote', $event)">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -108,8 +107,8 @@
   <section class="area" id="areas">
     <div class="wrap">
       <span class="eyebrow">Service area</span>
-      <h2>Gauteng</h2>
-      <p class="section-note">Homes and businesses across Gauteng.</p>
+      <h2>Gauteng area</h2>
+      <p class="section-note">We service the Gauteng area.</p>
     </div>
   </section>
 
@@ -192,7 +191,7 @@
         <p>Professional cleaning and pest control for homes and businesses across Gauteng.</p>
       </div>
       <div><h3>Services</h3><div class="footer-links"><a routerLink="/cleaning">Carpet, couch and mattress cleaning</a><a routerLink="/pest-control">Pest control</a><a href="#quote" (click)="scrollTo('quote', $event)">Get a quote</a></div></div>
-      <div><h3>Company</h3><div class="footer-links"><a routerLink="/about">About</a><a routerLink="/privacy">Privacy</a><a routerLink="/terms">Terms</a><a href="#areas" (click)="scrollTo('areas', $event)">Gauteng</a></div></div>
+      <div><h3>Company</h3><div class="footer-links"><a routerLink="/about">About</a><a routerLink="/privacy">Privacy</a><a routerLink="/terms">Terms</a></div></div>
       <div><h3>Contact</h3><div class="footer-links"><a [href]="phoneHref">{{ phoneDisplay }}</a><a href="mailto:sales@unsullied.co.za">sales@unsullied.co.za</a><a href="#quote" (click)="scrollTo('quote', $event)">Get a quote</a></div></div>
     </div>
     <div class="footer-bottom"><span>© {{ year }} Unsullied. All rights reserved.</span><span>Designed by CODIST.</span></div>
